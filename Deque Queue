@@ -1,3 +1,5 @@
+#An interactive command-line customer queue system built in Python using deque. Supports serving, searching, reversing, saving, and managing queue capacity.
+
 from collections import deque
 queue = deque()
 MAX_QUEUE_SIZE = 5
