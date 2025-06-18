@@ -1,0 +1,75 @@
+from collections import deque
+queue = deque()
+MAX_QUEUE_SIZE = 5
+
+
+while True:
+    command = input()
+
+    if command == "End":
+        break
+
+    if command.startswith("Join "):
+        name = command.split(" ", 1)[1]
+        if name in queue:
+            print(f"{name} is already in the queue.")
+        elif len(queue) >= MAX_QUEUE_SIZE:
+            print(f"Queue is full. {name} cannot be added.")
+        else:
+            queue.append(name)
+
+
+
+
+    elif command.startswith("Serve"):
+
+        parts = command.split()
+
+        count = 1  # default
+
+        if len(parts) == 2 and parts[1].isdigit():
+            count = int(parts[1])
+
+        for _ in range(count):
+
+            if queue:
+
+                print(f"{queue.popleft()} served")
+
+            else:
+
+                print("No one to serve.")
+
+                break
+
+    elif command == "Show":
+        if queue:
+            print("Current queue:", " ".join(queue))
+        else:
+            print("The queue is empty.")
+
+    elif command == "Reverse":
+        queue.reverse()
+        print("Queue reversed.")
+
+    elif command == "Clear":
+        queue.clear()
+        print("Queue cleared.")
+
+    elif command == "Save":
+        with open("queue.txt", "w") as f:
+            for person in queue:
+                f.write(person + "\n")
+        print("Queue saved to queue.txt.")
+
+    elif command.startswith("Search "):
+        name = command.split(" ", 1)[1]
+        if name in queue:
+            print(f"{name} is in the queue.")
+        else:
+            print(f"{name} is not in the queue.")
+
+if queue:
+    print(f"Remaining people: {len(queue)}")
+else:
+    print(f"No customers to serve")
